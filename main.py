@@ -7,7 +7,7 @@ import os
 import time
 from utils import *
 import shutil
-
+from test import eval_file
 '''
 query_path str 查询文件路径
 w2v_path str 词向量路径
@@ -89,9 +89,10 @@ if __name__ == '__main__':
     # os.makedirs(res_path)
     # for i, doc_id_list in enumerate(res):
     #     get_doc(doc_id_list, os.path.join(res_path, str(i) + '.txt'))+
-    # 计算p@10
-    from test import eval_file
+
     eval_file(res)
-    computePrecision(0, res[0][0][:10])
+    f = os.popen("trec_eval_latest/trec_eval qrels.txt res_tmp.txt")
+    print("结果：\n",f.read())
+    # 计算p@10
     end = time.time()
-    print(end - start)
+    print("时间：\n",end - start)
